@@ -1,13 +1,15 @@
+print("FASTAPI SERVER STARTING...")
+
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from utils.predictor import predict_image
 import shutil
 import uuid
 import os
+import uvicorn
 
 app = FastAPI()
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -41,14 +43,12 @@ async def predict(file: UploadFile = File(...)):
         "confidence": result["confidence"]
     }
 
-import os
-import uvicorn
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
 
     uvicorn.run(
-        "app:app",
+        app,
         host="0.0.0.0",
         port=port
     )
