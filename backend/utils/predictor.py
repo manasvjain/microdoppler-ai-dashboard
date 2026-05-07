@@ -12,7 +12,10 @@ svm = joblib.load("models/svm_model.pkl")
 classes = ["Bird", "Bird + Drone", "Drone"]
 
 # Device
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+device = torch.device("cpu")
+
+
 
 # ResNet50
 model = models.resnet50(pretrained=True)
